@@ -1,0 +1,18 @@
+﻿Text file:
+- To use for storing username, email, password, book,...
+- Maybe: username.txt (including username, email), password.txt, book.txt,...
+
+Users:
+- Admin: manage user’s accounts, only created by an admin (add, modifying, delete, list).
+- Registrable:
++ Reader (user): borrow and return books.
++ Librarian: manage book (add, modifying, delete, list).
+
+Authentication: check box? False for user, true for librarian
+*Case prediction:
+- Login:
++ Invalid password -> use account’s email to create new password.
++ Invalid username -> register.
+- Register: 
++ Username and email must be unique.
++ Used username or email.
