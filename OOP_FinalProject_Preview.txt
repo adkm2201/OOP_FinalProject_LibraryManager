@@ -1,6 +1,6 @@
 ﻿Text file:
 - To use for storing username, email, password, book,...
-- Maybe: username.txt (including username, email), password.txt, book.txt,...
+- Maybe: username.txt (including username, email?), password.txt, book.txt,...
 
 Users: CRUD
 - Admin: manage user’s accounts, only created by an admin (add, modifying, delete, list).
@@ -11,11 +11,11 @@ Users: CRUD
 Authentication: check box? False for user, true for librarian
 *Case prediction:
 - Login:
-+ Invalid password -> use account’s email to create new password.
++ Invalid password -> enter again or [Forget password] -> use account’s email to create new password.
 + Invalid username -> register.
 - Register: 
 + Username and email must be unique.
-+ Used username or email.
++ Used username or email (invalid input) -> try another username or email.
 
 Books:
 
@@ -25,8 +25,8 @@ Books:
 
 GUI: +bonus
 Database
-MVC?
+Use MVC
 
 Submition:
-_ Describe problems.
+- Describe problems.
 - Class diagram.
