@@ -8,6 +8,6 @@ package model;
  *
  * @author adkm2
  */
-public class Admin {
+public class Admin extends User{
     
 }
