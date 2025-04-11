@@ -8,33 +8,20 @@ package model;
  *
  * @author adkm2
  */
-public abstract class User {
-    private int id;
+public class User {
     private String username;
-    String password;
-    boolean isLib;
-    boolean isAdmin;
+    private String password;
+    private int userType;
     
     public User() {
     }
     
-    public User(int id, String username, String password, boolean isLib, boolean isAdmin) {
-        this.id = id;
+    public User(String username, String password, int userType) {
         this.username = username;
         this.password = password;
-        this.isLib = isLib;
-        this.isAdmin = false;
+        this.userType = userType;
     }
     
-    
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     // Getter and Setter for username
     public String getUsername() {
@@ -53,13 +40,13 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    // Getter and Setter for isLib
-    public boolean isLib() {
-        return isLib;
+    
+    //getter setter usertype
+    public int getUserType() {
+        return userType;
     }
 
-    public void setLib(boolean isLib) {
-        this.isLib = isLib;
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 }
