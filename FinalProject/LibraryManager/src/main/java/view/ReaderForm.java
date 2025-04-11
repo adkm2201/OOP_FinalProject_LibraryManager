@@ -42,16 +42,34 @@ public class ReaderForm extends javax.swing.JFrame {
 
         bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title", "Author", "Genre", "ISBN", "Available", "Pages", "File Format"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         bookList.setViewportView(bookTable);
+        if (bookTable.getColumnModel().getColumnCount() > 0) {
+            bookTable.getColumnModel().getColumn(0).setResizable(false);
+            bookTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+            bookTable.getColumnModel().getColumn(1).setResizable(false);
+            bookTable.getColumnModel().getColumn(2).setResizable(false);
+            bookTable.getColumnModel().getColumn(2).setPreferredWidth(60);
+            bookTable.getColumnModel().getColumn(4).setPreferredWidth(40);
+            bookTable.getColumnModel().getColumn(5).setPreferredWidth(40);
+            bookTable.getColumnModel().getColumn(6).setPreferredWidth(40);
+        }
 
         signOutLabel.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         signOutLabel.setText("Sign Out");
@@ -123,7 +141,7 @@ public class ReaderForm extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(0, 147, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(bookList, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(bookList)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
