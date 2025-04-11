@@ -8,6 +8,9 @@ import controller.LoginController;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.User;
 
@@ -26,7 +29,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
-       this.setSize(800, 480);
+        this.setSize(420, 400);
         this.setLocationRelativeTo(null);
         this.setTitle("Library Manager");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -126,7 +129,7 @@ public class LoginForm extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(usernameField)
                                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(72, 72, 72))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,11 +178,15 @@ public class LoginForm extends javax.swing.JFrame {
         } else if (loginController.login(username, password)) {
                 loginController.setLoginForm(this);
                 //loginController.handleLoginSuccess();
-        } else if (loginController.checkUser(username)) {
-            JOptionPane.showMessageDialog(null, "Password incorrect!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Username have not signed up!");
-            unSignUpUserName = username;
+        } else try {
+            if (loginController.checkUser(username)) {
+                JOptionPane.showMessageDialog(null, "Password incorrect!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Username have not signed up!");
+                unSignUpUserName = username;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

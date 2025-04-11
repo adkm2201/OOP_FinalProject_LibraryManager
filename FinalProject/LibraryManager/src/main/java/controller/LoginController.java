@@ -16,15 +16,15 @@ import javax.swing.JOptionPane;
 import view.LoginForm;
 
 public class LoginController {
-    private UserDAO userDAO;
+    private UserDAO userDAO = new UserDAO();
     private LoginForm loginForm;
 
     public LoginController() {
     }
     
-    public LoginController(Connection connection) {
-        this.userDAO = new UserDAO(connection);
-    }
+//    public LoginController(Connection connection) {
+//        this.userDAO = new UserDAO(connection);
+//    }
 
     public boolean login(String username, String password) {
         try {
@@ -37,11 +37,11 @@ public class LoginController {
             JOptionPane.showMessageDialog(null, "An error occurred while connecting to the database.", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
         return false;
     }
     
-    public boolean checkUser(String username) {
+    public boolean checkUser(String username) throws SQLException {
         return userDAO.isExistUser(username);
     }
     

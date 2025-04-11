@@ -4,12 +4,16 @@
  */
 package test;
 
+import controller.LoginController;
+import view.LoginForm;
+
 /**
  *
  * @author adkm2
  */
 public class test {
     public static void main(String[] args) {
-        System.out.println("hello");
+        LoginController lg = new LoginController();
+        lg.LoadLoginForm();
     }
 }

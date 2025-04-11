@@ -17,12 +17,17 @@ import model.User;
  */
 public class UserDAO {
     private Connection connection;
+    private Database db = new Database();
 
+    public UserDAO() {
+    }
+    
     public UserDAO(Connection connection) {
         this.connection = connection;
     }
-
+    
     public User getUserByUsername(String username) throws SQLException {
+        connection = db.connect();
         String query = "SELECT * FROM Users WHERE Username = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -36,10 +41,12 @@ public class UserDAO {
                 );
             }
         }
+        connection.close();
         return null;
     }
 
     public boolean addUser(User user) throws SQLException {
+        connection = db.connect();
         String query = "INSERT INTO Users (Username, password, UserType) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getUsername());
@@ -49,11 +56,14 @@ public class UserDAO {
             return true;
         } catch (SQLException exception) {
             return false;
+        } finally {
+            connection.close();
         }
         
     }
     
-    public boolean isExistUser(String username) {
+    public boolean isExistUser(String username) throws SQLException {
+        connection = db.connect();       
         String query = "SELECT * FROM Users WHERE Username = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -61,6 +71,8 @@ public class UserDAO {
             return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+           connection.close();
         }
         return false;
     }

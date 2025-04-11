@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class testConnect {
     public static void main(String[] args) throws SQLException {
-        Connection connection = database.Database.getConnection();
+        Connection connection = database.Database.connect();
         System.out.println(connection);
     }
 }

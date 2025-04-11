@@ -16,15 +16,11 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class SignUpController {
-    private UserDAO userDAO;
+    private UserDAO userDAO = new UserDAO();
 
     public SignUpController() {
-        try {
-            Connection connection = Database.getConnection();
-            this.userDAO = new UserDAO(connection);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        Connection connection = Database.connect();
+        this.userDAO = new UserDAO(connection);
     }
 
     public void signUp(String username, String password, String confirmPassword) {

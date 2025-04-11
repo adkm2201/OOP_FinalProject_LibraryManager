@@ -1,8 +1,10 @@
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\controller\LoginController.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\controller\SignUpController.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\dao\UserDAO.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\database\Database.java
-D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\model\Admin.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\model\Book.java
-D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\model\Librarian.java
-D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\model\Reader.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\model\User.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\test\test.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\test\testConnect.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\LoginForm.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\SignupForm.java

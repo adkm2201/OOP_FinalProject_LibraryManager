@@ -196,22 +196,26 @@ public class SignupForm extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
-        // TODO add your handling code here:
-        String username = usernameField.getText();
-        String password = String.valueOf(passwordField.getPassword());
-        String rePassword = String.valueOf(confirmField.getPassword());
-
-        if (loginController.checkUser(username)) {
-            JOptionPane.showMessageDialog(null, "Username already exist! Please try another username");
-        } else if (!validateSignUp(username) || !validatePassword(password, rePassword)) {
-            // JOptionPane.showMessageDialog(null, "Username already exist! Please try another username");
-        } else try {
-            if (loginController.register(username, password, 0)) {
-                JOptionPane.showMessageDialog(null, "SignUp successful!");
-                new LoginForm().setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "SignUp failed");
+        try {
+            // TODO add your handling code here:
+            String username = usernameField.getText();
+            String password = String.valueOf(passwordField.getPassword());
+            String rePassword = String.valueOf(confirmField.getPassword());
+            
+            if (loginController.checkUser(username)) {
+                JOptionPane.showMessageDialog(null, "Username already exist! Please try another username");
+            } else if (!validateSignUp(username) || !validatePassword(password, rePassword)) {
+                // JOptionPane.showMessageDialog(null, "Username already exist! Please try another username");
+            } else try {
+                if (loginController.register(username, password, 0)) {
+                    JOptionPane.showMessageDialog(null, "SignUp successful!");
+                    new LoginForm().setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "SignUp failed");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SignupForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SignupForm.class.getName()).log(Level.SEVERE, null, ex);
