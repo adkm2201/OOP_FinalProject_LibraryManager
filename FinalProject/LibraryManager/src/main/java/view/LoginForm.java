@@ -174,8 +174,8 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(LoginForm.this, "Please enter both username and password.");
         } else if (loginController.login(username, password)) {
                 loginController.setLoginForm(this);
-                loginController.handleLoginSuccess();
-        } else if (isExistUser(username)) {
+                //loginController.handleLoginSuccess();
+        } else if (loginController.checkUser(username)) {
             JOptionPane.showMessageDialog(null, "Password incorrect!");
         } else {
             JOptionPane.showMessageDialog(null, "Username have not signed up!");
@@ -220,19 +220,19 @@ public class LoginForm extends javax.swing.JFrame {
         return true;
     }
 
-    public User getDangNhap() {
-        boolean isAdmin;
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
-        System.out.println(password);
-        if (!authenticateUser(username, password)) {
-            return null;
-        }
-        isAdmin = username.equalsIgnoreCase("admin") & password.equalsIgnoreCase("admin");
-
-        User currentUser = new User(username, password, isAdmin);
-        return currentUser;
-    }
+//    public User getDangNhap() {
+//        boolean isAdmin;
+//        String username = usernameField.getText();
+//        String password = new String(passwordField.getPassword());
+//        System.out.println(password);
+//        if (!authenticateUser(username, password)) {
+//            return null;
+//        }
+//        isAdmin = username.equalsIgnoreCase("admin") & password.equalsIgnoreCase("admin");
+//
+//        User currentUser = new User(username, password, isAdmin);
+//        return currentUser;
+//    }
 
     public void addLoginListener(ActionListener listener) {
         submitBtn.addActionListener(listener);

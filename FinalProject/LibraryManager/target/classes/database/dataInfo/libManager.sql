@@ -1,22 +1,21 @@
 CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY,
     Username NVARCHAR(50) NOT NULL UNIQUE,
-    PasswordHash NVARCHAR(255) NOT NULL,
-    FullName NVARCHAR(100),
-    UserType INT NOT NULL CHECK (UserType IN (0, 1, 2))
+    [password] NVARCHAR(255) NOT NULL,
+    UserType INT NOT NULL CHECK (UserType IN (0, 1, 2)) -- 0: reader, 1: librarian, 2: admin
 );
 
 
 CREATE TABLE Books (
     BookID INT IDENTITY(1,1) PRIMARY KEY,
-    Title NVARCHAR(255) NOT NULL,
-    Author NVARCHAR(255) NOT NULL,
-    Genre NVARCHAR(100),
+    Title NVARCHAR(100) NOT NULL,
+    Author NVARCHAR(100) NOT NULL,
+    Genre NVARCHAR(50),
     ISBN NVARCHAR(13) UNIQUE NOT NULL,
-    AvailabilityStatus BIT NOT NULL,
-    BookType BIT NOT NULL,
-    NumberOfPages INT,
-    FileFormat NVARCHAR(50)
+    Available INT NOT NULL, -- = 0: not available, > 0: available
+    BookType BIT NOT NULL, -- 0: printed book, 1: ebook
+    NumberOfPages INT, -- only when booktype = 0
+    FileFormat NVARCHAR(20) --only when booktype = 1
 );
 
 
@@ -29,3 +28,7 @@ CREATE TABLE BorrowedBooks (
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (BookID) REFERENCES Books(BookID)
 );
+
+drop table BorrowedBooks;
+drop table Books;
+drop table Users;

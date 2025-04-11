@@ -5,9 +5,13 @@
 package view;
 
 
+import controller.LoginController;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.User;
 
@@ -197,16 +201,20 @@ public class SignupForm extends javax.swing.JFrame {
         String password = String.valueOf(passwordField.getPassword());
         String rePassword = String.valueOf(confirmField.getPassword());
 
-        if (isExistUser(username)) {
+        if (loginController.checkUser(username)) {
             JOptionPane.showMessageDialog(null, "Username already exist! Please try another username");
         } else if (!validateSignUp(username) || !validatePassword(password, rePassword)) {
             // JOptionPane.showMessageDialog(null, "Username already exist! Please try another username");
-        } else if (loginController.register(username, password, false)) {
-            JOptionPane.showMessageDialog(null, "SignUp successful!");
-            new LoginForm().setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "SignUp failed");
+        } else try {
+            if (loginController.register(username, password, 0)) {
+                JOptionPane.showMessageDialog(null, "SignUp successful!");
+                new LoginForm().setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "SignUp failed");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SignupForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_signupBtnActionPerformed
 
@@ -275,7 +283,6 @@ public class SignupForm extends javax.swing.JFrame {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         String passwordConfirm = new String(confirmField.getPassword());
-
         if (!validateSignUp(username)) {
             return null;
         }
