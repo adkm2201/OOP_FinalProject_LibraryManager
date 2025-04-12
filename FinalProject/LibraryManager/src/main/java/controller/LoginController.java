@@ -13,7 +13,10 @@ import model.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import view.AdminForm;
+import view.LibrarianForm;
 import view.LoginForm;
+import view.ReaderForm;
 
 public class LoginController {
     private UserDAO userDAO = new UserDAO();
@@ -62,6 +65,34 @@ public class LoginController {
         User user = new User(username, password, 0);
         if (userDAO.addUser(user) != null) return true;
         return false;
+    }
+    
+    public void loginSuccess(String username) {
+        try {
+            // Lấy userType từ cơ sở dữ liệu dựa trên username
+            int userType = userDAO.getUserTypeByUsername(username);
+
+            // Đóng LoginForm
+            loginForm.dispose();
+
+            // Mở form tương ứng dựa trên userType
+            switch (userType) {
+                case 0: // Reader
+                    new ReaderForm().setVisible(true);
+                    break;
+                case 1: // Librarian
+                    new LibrarianForm().setVisible(true);
+                    break;
+                case 2: // Admin
+                    new AdminForm().setVisible(true);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Invalid user type!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
     }
     
 }

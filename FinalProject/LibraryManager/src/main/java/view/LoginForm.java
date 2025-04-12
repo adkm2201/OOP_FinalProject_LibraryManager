@@ -177,7 +177,7 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(LoginForm.this, "Please enter both username and password.");
         } else if (loginController.login(username, password)) {
                 loginController.setLoginForm(this);
-                //loginController.handleLoginSuccess();
+                loginController.loginSuccess(username);
         } else try {
             if (loginController.checkUser(username)) {
                 JOptionPane.showMessageDialog(null, "Password incorrect!");

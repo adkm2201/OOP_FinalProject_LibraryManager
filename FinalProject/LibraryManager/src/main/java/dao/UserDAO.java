@@ -154,4 +154,16 @@ public class UserDAO {
         return users;
     }
     
+    public int getUserTypeByUsername(String username) throws SQLException {
+        String query = "SELECT UserType FROM Users WHERE Username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("UserType"); // Trả về UserType
+            }
+        }
+        throw new SQLException("User not found!"); // Ném lỗi nếu không tìm thấy người dùng
+    }
+    
 }
