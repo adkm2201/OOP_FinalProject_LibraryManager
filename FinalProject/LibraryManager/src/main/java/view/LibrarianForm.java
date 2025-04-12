@@ -5,7 +5,10 @@
 package view;
 
 import controller.LibrarianController;
+import java.util.List;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.Book;
 
 /**
  *
@@ -209,13 +212,31 @@ public class LibrarianForm extends javax.swing.JFrame {
 
     private void filterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterBtnActionPerformed
         // TODO add your handling code here:
-        FilterForm f = new FilterForm();
+        FilterForm f = new FilterForm(this);
         f.setVisible(true);
     }//GEN-LAST:event_filterBtnActionPerformed
 
     public void reloadBookTable() {
         LibrarianController librarianController = new LibrarianController();
         librarianController.loadBooksToTable(bookTable);
+    }
+    
+    public void updateBookTable(List<Book> books) {
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ trong bảng
+        for (Book book : books) {
+            model.addRow(new Object[]{
+                    book.getBookID(),
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getGenre(),
+                    book.getIsbn(),
+                    book.getAvailable(),
+                    book.isBookType() ? "eBook" : "Printed",
+                    book.getNumberOfPages(),
+                    book.getFileFormat()
+            });
+        }
     }
     
     private void customizeTableColumns() {

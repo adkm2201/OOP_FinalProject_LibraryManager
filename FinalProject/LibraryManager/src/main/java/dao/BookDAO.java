@@ -161,4 +161,72 @@ public class BookDAO {
         return null; // Trả về null nếu không tìm thấy sách
     }
     
+    public List<Book> getBooksByFilter(String title, String author, List<String> genres) throws SQLException {
+        connection = db.connect();
+        
+        StringBuilder query = new StringBuilder("SELECT * FROM Books WHERE 1=1");
+
+        // Thêm điều kiện lọc theo title nếu có
+        if (title != null && !title.trim().isEmpty()) {
+            query.append(" AND Title LIKE ?");
+        }
+
+        // Thêm điều kiện lọc theo author nếu có
+        if (author != null && !author.trim().isEmpty()) {
+            query.append(" AND Author LIKE ?");
+        }
+
+        // Thêm điều kiện lọc theo genre nếu có
+        if (genres != null && !genres.isEmpty()) {
+            query.append(" AND Genre IN (");
+            for (int i = 0; i < genres.size(); i++) {
+                query.append("?");
+                if (i < genres.size() - 1) {
+                    query.append(", ");
+                }
+            }
+            query.append(")");
+        }
+
+        List<Book> books = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query.toString())) {
+            int paramIndex = 1;
+
+            // Gán giá trị cho title
+            if (title != null && !title.trim().isEmpty()) {
+                stmt.setString(paramIndex++, "%" + title + "%");
+            }
+
+            // Gán giá trị cho author
+            if (author != null && !author.trim().isEmpty()) {
+                stmt.setString(paramIndex++, "%" + author + "%");
+            }
+
+            // Gán giá trị cho genres
+            if (genres != null && !genres.isEmpty()) {
+                for (String genre : genres) {
+                    stmt.setString(paramIndex++, genre);
+                }
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Book book = new Book();
+                book.setBookID(rs.getInt("BookID"));
+                book.setTitle(rs.getString("Title"));
+                book.setAuthor(rs.getString("Author"));
+                book.setGenre(rs.getString("Genre"));
+                book.setIsbn(rs.getString("ISBN"));
+                book.setAvailable(rs.getInt("Available"));
+                book.setBookType(rs.getBoolean("BookType"));
+                book.setNumberOfPages(rs.getInt("NumberOfPages"));
+                book.setFileFormat(rs.getString("FileFormat"));
+                books.add(book);
+            }
+        } finally {
+            connection.close();
+        }
+        return books;
+    }
+    
 }

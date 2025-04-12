@@ -6,6 +6,7 @@ package controller;
 
 import dao.BookDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,6 +138,16 @@ public class LibrarianController {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             return null;
+        }
+    }
+    
+    public List<Book> getBooksByFilter(String title, String author, List<String> genres) {
+        try {
+            return bookDAO.getBooksByFilter(title, author, genres);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            return new ArrayList<>();
         }
     }
     

@@ -4,16 +4,24 @@
  */
 package view;
 
+import controller.LibrarianController;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Book;
+
 /**
  *
  * @author adkm2
  */
 public class FilterForm extends javax.swing.JFrame {
-
+    private LibrarianController librarianController = new LibrarianController();
+    private LibrarianForm librarianForm;
     /**
      * Creates new form FilterForm
      */
-    public FilterForm() {
+    public FilterForm(LibrarianForm librarianForm) {
+        this.librarianForm = librarianForm;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Library Manager");
@@ -79,6 +87,11 @@ public class FilterForm extends javax.swing.JFrame {
 
         okBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         okBtn.setText("OK");
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
 
         backBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         backBtn.setText("Back");
@@ -162,40 +175,35 @@ public class FilterForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+        // TODO add your handling code here:
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FilterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FilterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FilterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FilterForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+            String title = titleTF.getText().trim();
+            String author = authorTF.getText().trim();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FilterForm().setVisible(true);
-            }
-        });
-    }
+            // Lấy danh sách thể loại đã chọn
+            List<String> genres = new ArrayList<>();
+            if (fictionCB.isSelected()) genres.add("Fiction");
+            if (dystopianCB.isSelected()) genres.add("Dystopian");
+            if (fantasyCB.isSelected()) genres.add("Fantasy");
+            if (scificCB.isSelected()) genres.add("Science Fic");
+            if (techCB.isSelected()) genres.add("Tech");
+            if (horrorCB.isSelected()) genres.add("Horror");
+
+            // Gọi phương thức từ LibrarianController để lấy danh sách sách
+            List<Book> books = librarianController.getBooksByFilter(title, author, genres);
+
+            // Cập nhật bảng trong LibrarianForm
+            librarianForm.updateBookTable(books);
+
+            // Đóng FilterForm
+            this.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_okBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel authorLabel;
