@@ -60,7 +60,8 @@ public class LoginController {
     
     public boolean register(String username, String password, int userType) throws SQLException {
         User user = new User(username, password, 0);
-        return userDAO.addUser(user);
+        if (userDAO.addUser(user) != null) return true;
+        return false;
     }
     
 }

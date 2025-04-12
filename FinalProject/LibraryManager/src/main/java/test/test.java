@@ -4,6 +4,7 @@
  */
 package test;
 
+import controller.AdminController;
 import controller.LoginController;
 import view.LoginForm;
 
@@ -13,7 +14,9 @@ import view.LoginForm;
  */
 public class test {
     public static void main(String[] args) {
-        LoginController lg = new LoginController();
-        lg.LoadLoginForm();
+//        LoginController lg = new LoginController();
+//        lg.LoadLoginForm();
+        AdminController ad = new AdminController();
+        ad.loadAdminForm();
     }
 }

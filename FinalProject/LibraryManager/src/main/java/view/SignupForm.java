@@ -32,7 +32,6 @@ public class SignupForm extends javax.swing.JFrame {
         this.setTitle("Library Manager");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    getContentPane().setBackground(Color.getHSBColor(0.2f, 0.05f, 0.95f));
 }
 
     /**

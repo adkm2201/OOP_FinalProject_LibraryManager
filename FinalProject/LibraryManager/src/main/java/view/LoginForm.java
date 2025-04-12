@@ -33,7 +33,7 @@ public class LoginForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Library Manager");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.getHSBColor(0.2f, 0.05f, 0.95f));
+        //getContentPane().setBackground(Color.getHSBColor(0.2f, 0.05f, 0.95f));
     }
 
     /**

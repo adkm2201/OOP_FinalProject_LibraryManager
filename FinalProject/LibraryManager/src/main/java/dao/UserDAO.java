@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import model.User;
 
 /**
@@ -44,22 +47,50 @@ public class UserDAO {
         connection.close();
         return null;
     }
+    
+    public User getUserByID(int userID) throws SQLException {
+    connection = db.connect();
+    String query = "SELECT Username, password, UserType FROM Users WHERE UserID = ?";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, userID); // Sử dụng userID để tìm kiếm
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return new User(
+                rs.getString("Username"),
+                rs.getString("password"),
+                rs.getInt("UserType")
+            );
+        }
+    } finally {
+        connection.close();
+    }
+    return null; // Trả về null nếu không tìm thấy người dùng
+}
 
-    public boolean addUser(User user) throws SQLException {
+    public User addUser(User user) throws SQLException {
         connection = db.connect();
-        String query = "INSERT INTO Users (Username, password, UserType) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Users (Username, password, UserType) OUTPUT INSERTED.UserID VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setInt(3, user.getUserType());
-            stmt.executeUpdate();
-            return true;
+
+            // Execute the query and get the generated UserID
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int generatedUserId = rs.getInt("UserID");
+                user.setUserId(generatedUserId); // Set the generated UserID to the User object
+                return user; // Return the updated User object
+            }
         } catch (SQLException exception) {
-            return false;
+            exception.printStackTrace();
+            throw exception; // Re-throw the exception for the caller to handle
         } finally {
-            connection.close();
+            if (connection != null) {
+                connection.close(); // Ensure the connection is closed in the finally block
+            }
         }
-        
+        return null; // Return null if the insertion fails
     }
     
     public boolean isExistUser(String username) throws SQLException {
@@ -75,6 +106,52 @@ public class UserDAO {
            connection.close();
         }
         return false;
+    }
+    
+    public boolean updateUser(User user) throws SQLException {
+        connection = db.connect();
+        String query = "UPDATE Users SET Username = ?, password = ?, UserType = ? WHERE UserID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setInt(3, user.getUserType());
+            stmt.setInt(4, user.getUserId());
+            return stmt.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
+        } finally {
+           connection.close();
+        }
+    }
+
+    public boolean deleteUser(int userId) throws SQLException {
+        connection = db.connect();
+        String query = "DELETE FROM Users WHERE UserID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            return stmt.executeUpdate() > 0;
+        } finally {
+           connection.close();
+        }
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        connection = db.connect();
+        String query = "SELECT * FROM Users";
+        List<User> users = new ArrayList<>();
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("UserID")); // Set UserID from database
+                user.setUsername(rs.getString("Username"));
+                user.setPassword(rs.getString("password"));
+                user.setUserType(rs.getInt("UserType"));
+                users.add(user); // Add the user to the list
+                
+            }
+        } finally {
+           connection.close();
+        }
+        return users;
     }
     
 }

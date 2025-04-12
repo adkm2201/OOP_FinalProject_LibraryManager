@@ -12,7 +12,7 @@ CREATE TABLE Books (
     Author NVARCHAR(100) NOT NULL,
     Genre NVARCHAR(50),
     ISBN NVARCHAR(13) UNIQUE NOT NULL,
-    Available INT NOT NULL, -- = 0: not available, > 0: available
+    Available INT NOT NU	LL, -- = 0: not available, > 0: available
     BookType BIT NOT NULL, -- 0: printed book, 1: ebook
     NumberOfPages INT, -- only when booktype = 0
     FileFormat NVARCHAR(20) --only when booktype = 1
@@ -64,3 +64,16 @@ VALUES
 ('The Pragmatic Programmer', 'Andrew Hunt and David Thomas', 'Tech', '9780201616224', 7, 1, NULL, 'PDF'),
 -- Mixed
 ('Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', 'Tech', '9780201633610', 6, 0, 395, NULL);
+
+
+INSERT INTO Books (Title, Author, Genre, ISBN, Available, BookType, NumberOfPages, FileFormat)
+VALUES
+-- Printed book
+('Introduction to Algorithms', 'Thomas H. Cormen', 'Tech', '9780262033848', 4, 0, 1312, NULL),
+-- Ebook
+('The Art of Computer Programming', 'Donald E. Knuth', 'Tech', '9780201896831', 6, 1, NULL, 'PDF'),
+-- Mixed
+('Computer Networking: A Top-Down Approach', 'James F. Kurose', 'Tech', '9780133594140', 5, 0, 864, NULL);
+
+-- Verify the inserted data
+SELECT * FROM Books;
