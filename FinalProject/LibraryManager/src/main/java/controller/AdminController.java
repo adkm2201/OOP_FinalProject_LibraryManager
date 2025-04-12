@@ -50,23 +50,23 @@ public class AdminController {
         }
     }
 
-public void updateUser(int userId, String username, String password, int userType) {
-    try {
-        User user = new User();
-        user.setUserId(userId);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setUserType(userType);
+    public void updateUser(int userId, String username, String password, int userType) {
+        try {
+            User user = new User();
+            user.setUserId(userId);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setUserType(userType);
 
-        if (userDAO.updateUser(user)) {
-            JOptionPane.showMessageDialog(null, "User updated successfully!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to update user.");
+            if (userDAO.updateUser(user)) {
+                JOptionPane.showMessageDialog(null, "User updated successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to update user.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-    }
 }
 
     public void deleteUser(int userId) {

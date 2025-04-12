@@ -4,17 +4,27 @@
  */
 package view;
 
+import controller.LibrarianController;
+import javax.swing.table.DefaultTableCellRenderer;
+
 /**
  *
  * @author adkm2
  */
 public class LibrarianForm extends javax.swing.JFrame {
 
+    private LibrarianController librarianController = new LibrarianController();
+
     /**
      * Creates new form LibrarianForm
      */
     public LibrarianForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Library Manager");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        librarianController.loadBooksToTable(bookTable); // Load books into the table
+        customizeTableColumns();
     }
 
     /**
@@ -26,22 +36,204 @@ public class LibrarianForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bookList = new javax.swing.JScrollPane();
+        bookTable = new javax.swing.JTable();
+        signOutLabel = new javax.swing.JLabel();
+        printBtn = new javax.swing.JButton();
+        ebookBtn = new javax.swing.JButton();
+        listLabel = new javax.swing.JLabel();
+        filterBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        manageBtn = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        bookTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Title", "Author", "Genre", "ISBN", "Available", "Pages", "File Format"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        bookList.setViewportView(bookTable);
+        if (bookTable.getColumnModel().getColumnCount() > 0) {
+            bookTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            bookTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            bookTable.getColumnModel().getColumn(3).setPreferredWidth(60);
+            bookTable.getColumnModel().getColumn(5).setPreferredWidth(40);
+            bookTable.getColumnModel().getColumn(6).setPreferredWidth(40);
+            bookTable.getColumnModel().getColumn(7).setPreferredWidth(40);
+        }
+
+        signOutLabel.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        signOutLabel.setText("Sign Out");
+        signOutLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signOutLabelMouseClicked(evt);
+            }
+        });
+
+        printBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        printBtn.setText("Printed Books");
+        printBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printBtnActionPerformed(evt);
+            }
+        });
+
+        ebookBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        ebookBtn.setText("EBooks");
+        ebookBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ebookBtnActionPerformed(evt);
+            }
+        });
+
+        listLabel.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        listLabel.setForeground(new java.awt.Color(204, 204, 204));
+        listLabel.setText("List:");
+
+        filterBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        filterBtn.setText("Filter");
+        filterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
+        manageBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageBtn.setText("Manipulate Book");
+        manageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 753, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(listLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(filterBtn)
+                        .addGap(52, 52, 52)
+                        .addComponent(cancelBtn)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(signOutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(bookList, javax.swing.GroupLayout.DEFAULT_SIZE, 1082, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(printBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ebookBtn)
+                .addGap(95, 95, 95)
+                .addComponent(manageBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listLabel)
+                    .addComponent(signOutLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(printBtn)
+                    .addComponent(ebookBtn)
+                    .addComponent(manageBtn))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterBtn)
+                    .addComponent(cancelBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bookList, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ebookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebookBtnActionPerformed
+        // TODO add your handling code here:
+        librarianController.loadBooksByTypeToTable(bookTable, true);
+    }//GEN-LAST:event_ebookBtnActionPerformed
+
+    private void manageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBtnActionPerformed
+        // TODO add your handling code here:
+        ManageBookForm manageBookForm = new ManageBookForm(this);
+        manageBookForm.setVisible(true);
+    }//GEN-LAST:event_manageBtnActionPerformed
+
+    private void signOutLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signOutLabelMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new LoginForm().setVisible(true);
+    }//GEN-LAST:event_signOutLabelMouseClicked
+
+    private void printBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
+        // TODO add your handling code here:
+        librarianController.loadBooksByTypeToTable(bookTable, false);
+    }//GEN-LAST:event_printBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // TODO add your handling code here:
+        librarianController.loadBooksToTable(bookTable);
+        
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void filterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterBtnActionPerformed
+        // TODO add your handling code here:
+        FilterForm f = new FilterForm();
+        f.setVisible(true);
+    }//GEN-LAST:event_filterBtnActionPerformed
+
+    public void reloadBookTable() {
+        LibrarianController librarianController = new LibrarianController();
+        librarianController.loadBooksToTable(bookTable);
+    }
+    
+    private void customizeTableColumns() {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(DefaultTableCellRenderer.LEFT);
+
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+
+        // Căn lề trái cho cột ID
+        bookTable.getColumnModel().getColumn(0).setCellRenderer(leftRenderer); // Column 0: ID
+
+        // Căn lề phải cho các cột Available, Pages, File Format
+        bookTable.getColumnModel().getColumn(5).setCellRenderer(rightRenderer); // Column 5: Available
+        bookTable.getColumnModel().getColumn(6).setCellRenderer(rightRenderer); // Column 7: Pages
+        bookTable.getColumnModel().getColumn(7).setCellRenderer(rightRenderer); // Column 8: File Format
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -78,5 +270,14 @@ public class LibrarianForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane bookList;
+    private javax.swing.JTable bookTable;
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton ebookBtn;
+    private javax.swing.JButton filterBtn;
+    private javax.swing.JLabel listLabel;
+    private javax.swing.JButton manageBtn;
+    private javax.swing.JButton printBtn;
+    private javax.swing.JLabel signOutLabel;
     // End of variables declaration//GEN-END:variables
 }

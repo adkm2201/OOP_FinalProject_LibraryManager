@@ -29,7 +29,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
-        this.setSize(420, 400);
+        this.setSize(400, 380);
         this.setLocationRelativeTo(null);
         this.setTitle("Library Manager");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -115,26 +115,29 @@ public class LoginForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(submitBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbUsername)
-                            .addComponent(lbPassword)
-                            .addComponent(lbSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(213, 213, 213)
+                        .addComponent(submitBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbUsername)
+                                .addComponent(lbPassword)))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbLogin)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(usernameField)
                                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(72, 72, 72))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(lbLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -144,11 +147,11 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(lbPassword)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                .addGap(18, 18, 18)
                 .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbSignup)
-                .addGap(30, 30, 30))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -215,8 +218,6 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void passwordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyTyped
         // TODO add your handling code here:
-       
-        
     }//GEN-LAST:event_passwordFieldKeyTyped
 
     private boolean authenticateUser(String username, String password) {
@@ -226,20 +227,6 @@ public class LoginForm extends javax.swing.JFrame {
         }
         return true;
     }
-
-//    public User getDangNhap() {
-//        boolean isAdmin;
-//        String username = usernameField.getText();
-//        String password = new String(passwordField.getPassword());
-//        System.out.println(password);
-//        if (!authenticateUser(username, password)) {
-//            return null;
-//        }
-//        isAdmin = username.equalsIgnoreCase("admin") & password.equalsIgnoreCase("admin");
-//
-//        User currentUser = new User(username, password, isAdmin);
-//        return currentUser;
-//    }
 
     public void addLoginListener(ActionListener listener) {
         submitBtn.addActionListener(listener);

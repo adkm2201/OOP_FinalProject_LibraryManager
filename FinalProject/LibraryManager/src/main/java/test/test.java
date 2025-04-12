@@ -5,6 +5,7 @@
 package test;
 
 import controller.AdminController;
+import controller.LibrarianController;
 import controller.LoginController;
 import view.LoginForm;
 
@@ -16,7 +17,9 @@ public class test {
     public static void main(String[] args) {
 //        LoginController lg = new LoginController();
 //        lg.LoadLoginForm();
-        AdminController ad = new AdminController();
-        ad.loadAdminForm();
+//        AdminController ad = new AdminController();
+//        ad.loadAdminForm();
+          LibrarianController lib = new LibrarianController();
+          lib.loadLibrarianForm();
     }
 }

@@ -15,6 +15,9 @@ public class FilterForm extends javax.swing.JFrame {
      */
     public FilterForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Library Manager");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     /**
@@ -37,6 +40,8 @@ public class FilterForm extends javax.swing.JFrame {
         titleTF = new javax.swing.JTextField();
         titleLabel = new javax.swing.JLabel();
         authorTF = new javax.swing.JTextField();
+        okBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +77,17 @@ public class FilterForm extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         titleLabel.setText("Title:");
 
+        okBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        okBtn.setText("OK");
+
+        backBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,15 +96,20 @@ public class FilterForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(fantasyCB, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dystopianCB)
-                            .addComponent(fictionCB, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(fantasyCB, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(dystopianCB)
+                                .addComponent(fictionCB, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(backBtn))
                         .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(horrorCB)
                             .addComponent(scificCB)
-                            .addComponent(techCB)))
+                            .addComponent(techCB)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(okBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(genreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(authorLabel)
@@ -122,7 +143,11 @@ public class FilterForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fantasyCB)
                     .addComponent(techCB))
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(okBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backBtn))
+                .addContainerGap())
         );
 
         pack();
@@ -131,6 +156,11 @@ public class FilterForm extends javax.swing.JFrame {
     private void fictionCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fictionCBActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fictionCBActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,11 +200,13 @@ public class FilterForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel authorLabel;
     private javax.swing.JTextField authorTF;
+    private javax.swing.JButton backBtn;
     private javax.swing.JCheckBox dystopianCB;
     private javax.swing.JCheckBox fantasyCB;
     private javax.swing.JCheckBox fictionCB;
     private javax.swing.JLabel genreLabel;
     private javax.swing.JCheckBox horrorCB;
+    private javax.swing.JButton okBtn;
     private javax.swing.JCheckBox scificCB;
     private javax.swing.JCheckBox techCB;
     private javax.swing.JLabel titleLabel;

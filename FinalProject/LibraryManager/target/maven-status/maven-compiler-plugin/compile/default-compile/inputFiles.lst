@@ -1,6 +1,8 @@
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\controller\AdminController.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\controller\LibrarianController.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\controller\LoginController.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\controller\SignUpController.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\dao\BookDAO.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\dao\UserDAO.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\database\Database.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\model\Book.java
@@ -12,6 +14,7 @@ D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManage
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\FilterForm.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\LibrarianForm.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\LoginForm.java
+D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\ManageBookForm.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\ReaderForm.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\SignupForm.java
 D:\OOP_FinalProject\OOP_FinalProject_LibraryManager-1\FinalProject\LibraryManager\src\main\java\view\ToBorrowBook.java

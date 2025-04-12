@@ -35,24 +35,25 @@ public class ReaderForm extends javax.swing.JFrame {
         listLabel = new javax.swing.JLabel();
         borrowLabel = new javax.swing.JLabel();
         filterBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        returnBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title", "Author", "Genre", "ISBN", "Available", "Pages", "File Format"
+                "ID", "Title", "Author", "Genre", "ISBN", "Available", "Pages", "File Format"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -61,14 +62,15 @@ public class ReaderForm extends javax.swing.JFrame {
         });
         bookList.setViewportView(bookTable);
         if (bookTable.getColumnModel().getColumnCount() > 0) {
-            bookTable.getColumnModel().getColumn(0).setResizable(false);
-            bookTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+            bookTable.getColumnModel().getColumn(0).setPreferredWidth(20);
             bookTable.getColumnModel().getColumn(1).setResizable(false);
+            bookTable.getColumnModel().getColumn(1).setPreferredWidth(200);
             bookTable.getColumnModel().getColumn(2).setResizable(false);
-            bookTable.getColumnModel().getColumn(2).setPreferredWidth(60);
-            bookTable.getColumnModel().getColumn(4).setPreferredWidth(40);
+            bookTable.getColumnModel().getColumn(3).setResizable(false);
+            bookTable.getColumnModel().getColumn(3).setPreferredWidth(60);
             bookTable.getColumnModel().getColumn(5).setPreferredWidth(40);
             bookTable.getColumnModel().getColumn(6).setPreferredWidth(40);
+            bookTable.getColumnModel().getColumn(7).setPreferredWidth(40);
         }
 
         signOutLabel.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
@@ -99,16 +101,19 @@ public class ReaderForm extends javax.swing.JFrame {
         filterBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         filterBtn.setText("Filter");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton1.setText("Borrowed Books");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        returnBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        returnBtn.setText("Borrowed Books");
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                returnBtnActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel1.setText("Return:");
+
+        cancelBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        cancelBtn.setText("Cancel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +131,9 @@ public class ReaderForm extends javax.swing.JFrame {
                         .addComponent(listLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(filterBtn)))
+                        .addComponent(filterBtn)
+                        .addGap(52, 52, 52)
+                        .addComponent(cancelBtn)))
                 .addGap(91, 91, 91)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(borrowBtn)
@@ -138,7 +145,7 @@ public class ReaderForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(signOutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(returnBtn)
                         .addGap(0, 147, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(bookList)
@@ -157,9 +164,11 @@ public class ReaderForm extends javax.swing.JFrame {
                     .addComponent(printBtn)
                     .addComponent(ebookBtn)
                     .addComponent(borrowBtn)
-                    .addComponent(jButton1))
+                    .addComponent(returnBtn))
                 .addGap(31, 31, 31)
-                .addComponent(filterBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterBtn)
+                    .addComponent(cancelBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bookList, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
         );
@@ -171,9 +180,9 @@ public class ReaderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ebookBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_returnBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,12 +224,13 @@ public class ReaderForm extends javax.swing.JFrame {
     private javax.swing.JTable bookTable;
     private javax.swing.JButton borrowBtn;
     private javax.swing.JLabel borrowLabel;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JButton ebookBtn;
     private javax.swing.JButton filterBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel listLabel;
     private javax.swing.JButton printBtn;
+    private javax.swing.JButton returnBtn;
     private javax.swing.JLabel signOutLabel;
     // End of variables declaration//GEN-END:variables
 }

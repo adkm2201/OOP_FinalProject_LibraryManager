@@ -4,40 +4,44 @@
  */
 package model;
 
-import java.time.LocalDate;
 
 /**
  *
  * @author adkm2
  */
 public class Book {
-
+    private int bookID; // Auto-incremented by SQL
     private String title;
     private String author;
     private String genre;
-    private String ISBN;
-    private boolean isAvailable;
-    private LocalDate dueDate;
-    private boolean isEBook;
-    private int numOfPages;
+    private String isbn;
+    private int available;
+    private boolean bookType; // 0: Printed, 1: Ebook
+    private int numberOfPages;
     private String fileFormat;
 
-    public Book() {
-    }
+    public Book() {}
 
-    public Book(String title, String author, String genre, String ISBN, boolean isAvailable, LocalDate dueDate, boolean isEBook, int numOfPages, String fileFormat) {
+    public Book(String title, String author, String genre, String isbn, int available, boolean bookType, int numberOfPages, String fileFormat) {
         this.title = title;
         this.author = author;
         this.genre = genre;
-        this.ISBN = ISBN;
-        this.isAvailable = true;
-        this.dueDate = dueDate;
-        this.isEBook = isEBook;
-        this.numOfPages = numOfPages;
+        this.isbn = isbn;
+        this.available = available;
+        this.bookType = bookType;
+        this.numberOfPages = numberOfPages;
         this.fileFormat = fileFormat;
     }
-    
-        // Getter and Setter for title
+
+    // Getters and Setters
+    public int getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -46,7 +50,6 @@ public class Book {
         this.title = title;
     }
 
-    // Getter and Setter for author
     public String getAuthor() {
         return author;
     }
@@ -55,7 +58,6 @@ public class Book {
         this.author = author;
     }
 
-    // Getter and Setter for genre
     public String getGenre() {
         return genre;
     }
@@ -64,52 +66,38 @@ public class Book {
         this.genre = genre;
     }
 
-    // Getter and Setter for ISBN
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
-    // Getter and Setter for isAvailable
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getAvailable() {
+        return available;
     }
 
-    public void setAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setAvailable(int available) {
+        this.available = available;
     }
 
-    // Getter and Setter for dueDate
-    public LocalDate getDueDate() {
-        return dueDate;
+    public boolean isBookType() {
+        return bookType;
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public void setBookType(boolean bookType) {
+        this.bookType = bookType;
     }
 
-    // Getter and Setter for isEBook
-    public boolean isEBook() {
-        return isEBook;
+    public int getNumberOfPages() {
+        return numberOfPages;
     }
 
-    public void setEBook(boolean isEBook) {
-        this.isEBook = isEBook;
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
     }
 
-    // Getter and Setter for numOfPages
-    public int getNumOfPages() {
-        return numOfPages;
-    }
-
-    public void setNumOfPages(int numOfPages) {
-        this.numOfPages = numOfPages;
-    }
-
-    // Getter and Setter for fileFormat
     public String getFileFormat() {
         return fileFormat;
     }
@@ -117,5 +105,7 @@ public class Book {
     public void setFileFormat(String fileFormat) {
         this.fileFormat = fileFormat;
     }
+    
 
+    
 }
