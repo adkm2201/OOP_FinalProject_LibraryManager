@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import javax.swing.table.DefaultTableCellRenderer;
@@ -24,7 +20,7 @@ public class AdminForm extends javax.swing.JFrame {
     public AdminForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Library Manager");
+        this.setTitle("Library Manager[Admin]");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         adminController.loadUsersToTable(userTable);
 

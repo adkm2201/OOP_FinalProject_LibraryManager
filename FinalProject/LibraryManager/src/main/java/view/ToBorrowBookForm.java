@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.BorrowController;
@@ -197,7 +193,7 @@ public class ToBorrowBookForm extends javax.swing.JFrame {
     
     }//GEN-LAST:event_borrowBtnActionPerformed
 
-    //limit date selection
+    //Limit date selection
     private void setTxtDate() {
         java.util.Date today = new java.util.Date();
         Calendar calendar = Calendar.getInstance();

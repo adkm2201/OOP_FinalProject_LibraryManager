@@ -17,9 +17,8 @@ import model.BorrowedBook;
  *
  * @author adkm2
  */
-public class BorrowController {
+public class BorrowController{
     private BorrowDAO borrowDAO = new BorrowDAO();
-    
     
     public void loadBorrowedBooksToTable(JTable table) {
         try {

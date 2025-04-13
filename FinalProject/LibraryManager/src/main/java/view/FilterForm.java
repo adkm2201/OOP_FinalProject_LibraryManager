@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.LibrarianController;
@@ -25,7 +21,7 @@ public class FilterForm extends javax.swing.JFrame {
         this.librarianForm = librarianForm;
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Library Manager");
+        this.setTitle("Filter");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -33,7 +29,7 @@ public class FilterForm extends javax.swing.JFrame {
         this.readerForm = readerForm;
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Library Manager");
+        this.setTitle("Filter");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     

@@ -25,7 +25,7 @@ public class AdminController {
     public AdminController() {
         userDAO = new UserDAO();
     }
-
+    
     public void loadAdminForm() {
         AdminForm adminForm = new AdminForm();
         adminForm.setVisible(true);
@@ -63,7 +63,7 @@ public class AdminController {
                 JOptionPane.showMessageDialog(null, "Failed to update user.");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "UserType is unvalid");
         }
 }
 

@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 
 import controller.LoginController;
-import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.User;
 
 
 /**
@@ -21,7 +14,6 @@ import model.User;
  * @author adkm2
  */
 public class SignupForm extends javax.swing.JFrame {
-
     private LoginController loginController = new LoginController();
 
     /**
@@ -279,26 +271,6 @@ public class SignupForm extends javax.swing.JFrame {
         }
         return true;
     }
-
-    //DOC DU LIEU TU TEXTFILD
-    public User getDangKy() {
-
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
-        String passwordConfirm = new String(confirmField.getPassword());
-        if (!validateSignUp(username)) {
-            return null;
-        }
-        if (!validatePassword(password, passwordConfirm)) {
-            return null;
-        }
-        return new User(username, password, 0);
-    }
-
-    public void addDangKyListener(ActionListener listener) {
-        signupBtn.addActionListener(listener);
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backLogin;

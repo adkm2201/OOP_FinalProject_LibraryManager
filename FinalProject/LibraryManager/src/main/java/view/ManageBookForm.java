@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.LibrarianController;
@@ -16,9 +12,7 @@ public class ManageBookForm extends javax.swing.JFrame {
     private LibrarianForm librarianForm;
     private LibrarianController librarianController = new LibrarianController();
 
-    /**
-     * Creates new form ManageBookForm
-     */
+
     public ManageBookForm(LibrarianForm librarianForm) {
         initComponents();
         this.librarianForm = librarianForm;
@@ -331,6 +325,7 @@ public class ManageBookForm extends javax.swing.JFrame {
         pagesTF.setText("");
         fileTF.setText("");
         typeTF.setText("");
+        idTF.setText("");
         
         deleteBtn.setEnabled(false);
         saveBtn.setEnabled(false);
@@ -338,10 +333,9 @@ public class ManageBookForm extends javax.swing.JFrame {
 
     private void getBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getBtnActionPerformed
         // TODO add your handling code here:
-        
         try {
-        int bookID = Integer.parseInt(idTF.getText()); // Lấy BookID từ TextField
-
+            // Lấy BookID từ TextField
+        int bookID = Integer.parseInt(idTF.getText());       
         // Gọi phương thức từ LibrarianController để lấy thông tin sách
         Book book = librarianController.getBookByID(bookID);
 
@@ -383,7 +377,7 @@ public class ManageBookForm extends javax.swing.JFrame {
         this.librarianForm.reloadBookTable();
         cancelBtn.doClick();
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Invalid input! Please check your data.");
+        JOptionPane.showMessageDialog(this, "Invalid input! Please check your data");
     }
     }//GEN-LAST:event_addBtnActionPerformed
 
@@ -391,12 +385,11 @@ public class ManageBookForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
         int bookID = Integer.parseInt(idTF.getText()); // Lấy BookID từ TextField
-
         librarianController.deleteBook(bookID); // Xóa sách
         this.librarianForm.reloadBookTable(); // Tải lại bảng trong LibrarianForm
         cancelBtn.doClick();
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Invalid Book ID! Please enter a valid number.");
+        JOptionPane.showMessageDialog(this, "Invalid Book ID! Please enter a valid number");
     }
     }//GEN-LAST:event_deleteBtnActionPerformed
 

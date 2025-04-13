@@ -41,6 +41,7 @@ view\ManageBookForm$9.class
 view\ReaderForm$2.class
 view\AdminForm$11.class
 view\LoginForm$1.class
+App.class
 view\ReturnForm$1.class
 view\ToBorrowBookForm$5.class
 view\LibrarianForm$8.class
@@ -60,7 +61,6 @@ view\LibrarianForm$3.class
 dao\BaseDAO.class
 view\ToBorrowBookForm.class
 view\FilterForm$1.class
-test\testConnect.class
 view\SignupForm$2.class
 view\AdminForm$9.class
 model\Book.class
@@ -86,4 +86,3 @@ view\ReaderForm$6.class
 view\ReaderForm.class
 view\AdminForm$7.class
 view\ManageBookForm$7.class
-test\test.class

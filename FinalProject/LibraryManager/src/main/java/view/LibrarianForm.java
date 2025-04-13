@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.LibrarianController;
@@ -24,7 +20,7 @@ public class LibrarianForm extends javax.swing.JFrame {
     public LibrarianForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Library Manager");
+        this.setTitle("Library Manager[Librarian]");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         librarianController.loadBooksToTable(bookTable); // Load books into the table
         customizeTableColumns();

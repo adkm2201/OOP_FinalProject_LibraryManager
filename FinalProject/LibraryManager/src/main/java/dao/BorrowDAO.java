@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import database.Database;
@@ -9,11 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.Date;
-import java.sql.Statement;
+
+import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
+
 import model.BorrowedBook;
 
 /**
@@ -30,21 +27,6 @@ public class BorrowDAO extends BaseDAO<BorrowedBook>{
 
     public BorrowDAO(Connection connection) {
         super(connection);
-    }
-
-    @Override
-    public BorrowedBook add(BorrowedBook borrowedBook) throws SQLException {
-        connection = db.connect();
-        String query = "INSERT INTO BorrowedBooks (UserID, BookID, BorrowDate, ReturnDate) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, borrowedBook.getUserID());
-            stmt.setInt(2, borrowedBook.getBookID());
-            stmt.setDate(3, (Date) borrowedBook.getBorrowDate());
-            stmt.setDate(4, (Date) borrowedBook.getReturnDate());
-            return borrowedBook;
-        } finally {
-            closeConnection();
-        }
     }
 
     @Override
@@ -96,30 +78,6 @@ public class BorrowDAO extends BaseDAO<BorrowedBook>{
         }
         return borrowedBooks;
     }
-    
-//    public List<BorrowedBook> getAllBorrowedBooks() throws SQLException {
-//        connection = db.connect();
-//        String query = "SELECT bb.BorrowID, u.Username, b.Title AS BookTitle, bb.BorrowDate, bb.ReturnDate " +
-//                       "FROM BorrowedBooks bb " +
-//                       "JOIN Users u ON bb.UserID = u.UserID " +
-//                       "JOIN Books b ON bb.BookID = b.BookID";
-//        List<BorrowedBook> borrowedBooks = new ArrayList<>();
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                BorrowedBook borrowedBook = new BorrowedBook();
-//                borrowedBook.setBorrowID(rs.getInt("BorrowID"));
-//                borrowedBook.setUsername(rs.getString("Username"));
-//                borrowedBook.setBookTitle(rs.getString("BookTitle"));
-//                borrowedBook.setBorrowDate(rs.getDate("BorrowDate"));
-//                borrowedBook.setReturnDate(rs.getDate("ReturnDate"));
-//                borrowedBooks.add(borrowedBook);
-//            }
-//        } finally {
-//            connection.close();
-//        }
-//        return borrowedBooks;
-//        }
     
     public List<BorrowedBook> getBorrowedBooksByUserID(int userID) throws SQLException {
         connection = db.connect();
@@ -282,6 +240,21 @@ public class BorrowDAO extends BaseDAO<BorrowedBook>{
             connection.close();
         }
         return false; // Trả về false nếu không tồn tại hoặc returnDate <= today
+    }
+    
+    @Override
+    public BorrowedBook add(BorrowedBook borrowedBook) throws SQLException {
+        connection = db.connect();
+        String query = "INSERT INTO BorrowedBooks (UserID, BookID, BorrowDate, ReturnDate) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, borrowedBook.getBorrowID());
+            stmt.setInt(2, borrowedBook.getBorrowID());
+            stmt.setDate(3, (Date) borrowedBook.getBorrowDate());
+            stmt.setDate(4, (Date) borrowedBook.getReturnDate());
+            return borrowedBook;
+        } finally {
+            closeConnection();
+        }
     }
     
     public int countReturnedBooksByDate(int userID, int bookID) throws SQLException {

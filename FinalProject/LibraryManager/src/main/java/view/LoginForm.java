@@ -1,20 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.LoginController;
-import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.User;
-
-
 
 /**
  *
@@ -32,7 +24,6 @@ public class LoginForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Library Manager");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //getContentPane().setBackground(Color.getHSBColor(0.2f, 0.05f, 0.95f));
     }
 
     /**
@@ -219,14 +210,6 @@ public class LoginForm extends javax.swing.JFrame {
     private void passwordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldKeyTyped
-
-    private boolean authenticateUser(String username, String password) {
-        if (username == null || password == null || username.isBlank() || password.isBlank()) {
-            JOptionPane.showMessageDialog(rootPane, "username and password must not be blank!");
-            return false;
-        }
-        return true;
-    }
 
     public void addLoginListener(ActionListener listener) {
         submitBtn.addActionListener(listener);
