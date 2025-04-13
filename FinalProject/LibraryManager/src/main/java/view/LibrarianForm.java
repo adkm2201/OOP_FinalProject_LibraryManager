@@ -102,7 +102,7 @@ public class LibrarianForm extends javax.swing.JFrame {
         });
 
         listLabel.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        listLabel.setForeground(new java.awt.Color(204, 204, 204));
+        listLabel.setForeground(new java.awt.Color(0, 0, 0));
         listLabel.setText("List:");
 
         filterBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

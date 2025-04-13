@@ -12,7 +12,7 @@ CREATE TABLE Books (
     Author NVARCHAR(100) NOT NULL,
     Genre NVARCHAR(50),
     ISBN NVARCHAR(13) UNIQUE NOT NULL,
-    Available INT NOT NU	LL, -- = 0: not available, > 0: available
+    Available INT NOT NULL, -- = 0: not available, > 0: available
     BookType BIT NOT NULL, -- 0: printed book, 1: ebook
     NumberOfPages INT, -- only when booktype = 0
     FileFormat NVARCHAR(20) --only when booktype = 1

@@ -75,7 +75,7 @@ public class AdminController {
                 JOptionPane.showMessageDialog(null, "Failed to delete user.");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "This user is borrowing book.");
         }
     }
     

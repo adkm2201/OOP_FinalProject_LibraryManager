@@ -30,7 +30,7 @@ public class ReaderForm extends javax.swing.JFrame {
         initComponents();
         this.loginForm = loginForm;
         this.setLocationRelativeTo(null);
-        this.setTitle("Library Manager");
+        this.setTitle("Library Manager[Reader]");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         librarianController.loadBooksToTable(bookTable); // Load books into the table
         customizeTableColumns();
@@ -126,11 +126,11 @@ public class ReaderForm extends javax.swing.JFrame {
         });
 
         listLabel.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        listLabel.setForeground(new java.awt.Color(204, 204, 204));
+        listLabel.setForeground(java.awt.Color.black);
         listLabel.setText("List:");
 
         borrowLabel.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        borrowLabel.setForeground(new java.awt.Color(204, 204, 204));
+        borrowLabel.setForeground(java.awt.Color.black);
         borrowLabel.setText("Enter Title to:");
 
         filterBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -142,7 +142,7 @@ public class ReaderForm extends javax.swing.JFrame {
         });
 
         returnBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        returnBtn.setText("Borrowed Books");
+        returnBtn.setText("Return Books");
         returnBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 returnBtnActionPerformed(evt);
@@ -150,6 +150,7 @@ public class ReaderForm extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.black);
         jLabel1.setText("Return:");
 
         cancelBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -201,7 +202,7 @@ public class ReaderForm extends javax.swing.JFrame {
                                 .addComponent(signOutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(returnBtn)
-                                .addGap(0, 147, Short.MAX_VALUE))))
+                                .addGap(0, 181, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(reloadBtn)
                         .addGap(0, 0, Short.MAX_VALUE)))

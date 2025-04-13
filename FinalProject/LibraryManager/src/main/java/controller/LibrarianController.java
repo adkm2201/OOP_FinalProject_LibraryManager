@@ -95,7 +95,7 @@ public class LibrarianController {
                 JOptionPane.showMessageDialog(null, "Failed to delete book. Book ID not found.");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Can't delete because this book was borrowed.");
         }
     }
     
