@@ -1,0 +1,32 @@
+﻿Text file:
+- To use for storing username, email, password, book,...
+- Maybe: username.txt (including username, email?), password.txt, book.txt,...
+
+Users: CRUD
+- Admin: manage user’s accounts, only created by an admin (add, modifying, delete, list).
+- Registrable:
++ Reader (user): borrow and return books.
++ Librarian: manage book (add, modifying, delete, list).
+
+Authentication: check box? False for user, true for librarian
+*Case prediction:
+- Login:
++ Invalid password -> enter again or [Forget password] -> use account’s email to create new password.
++ Invalid username -> register.
+- Register: 
++ Username and email must be unique.
++ Used username or email (invalid input) -> try another username or email.
+
+Books:
+
++ 2 types:
+- Printed Book: number of page
+- Ebook: file format
+
+GUI: +bonus
+Database
+Use MVC
+
+Submition:
+- Describe problems.
+- Class diagram.
