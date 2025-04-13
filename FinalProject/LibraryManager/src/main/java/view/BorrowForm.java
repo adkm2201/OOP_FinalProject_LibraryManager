@@ -5,17 +5,19 @@
 package view;
 
 import controller.BorrowController;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author adkm2
  */
-public class BorrowedForm extends javax.swing.JFrame {
+public class BorrowForm extends javax.swing.JFrame {
     private BorrowController borrowController = new BorrowController();
     
     private int userID; // Biến để lưu userID
 
-    public BorrowedForm(int userID) {
+    public BorrowForm(int userID) {
         this.userID = userID; // Lưu userID
         initComponents();
         this.setLocationRelativeTo(null);
@@ -69,6 +71,11 @@ public class BorrowedForm extends javax.swing.JFrame {
 
         returnBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         returnBtn.setText("Return Book");
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         titleLabel.setText("Title:");
@@ -122,6 +129,51 @@ public class BorrowedForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+        // TODO add your handling code here:
+        String title = titleTF.getText().trim();
+        if (title.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a book title.");
+            return;
+        }
+
+        try {
+            // Lấy BookID từ tiêu đề sách
+            int bookID = borrowController.getBookIDByTitle(title);
+            if (bookID == -1) {
+                JOptionPane.showMessageDialog(this, "Book not found.");
+                return;
+            }
+
+            // Lấy ngày hiện tại và returnDate từ cơ sở dữ liệu
+            LocalDate currentDate = LocalDate.now();
+            java.sql.Date sqlReturnDate = borrowController.getReturnDate(userID, bookID);
+
+            if (sqlReturnDate != null) {
+                // Chuyển đổi returnDate từ java.sql.Date sang LocalDate
+                LocalDate returnDate = sqlReturnDate.toLocalDate();
+
+                // So sánh ngày
+                if (returnDate.equals(currentDate)) {
+                    JOptionPane.showMessageDialog(this, "This book has already been returned.");
+                    return;
+                }
+            }
+
+            // Cập nhật returnDate trong bảng BorrowedBooks
+            if (borrowController.updateReturnDate(userID, bookID, java.sql.Date.valueOf(currentDate))) {
+                // Cộng 1 vào cột Available trong bảng Books
+                borrowController.incrementBookAvailability(bookID);
+                JOptionPane.showMessageDialog(this, "Book returned successfully!");
+                borrowController.loadBorrowedBooksToTable(bookTable, userID); // Tải lại bảng
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to return the book.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_returnBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

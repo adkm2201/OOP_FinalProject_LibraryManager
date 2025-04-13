@@ -7,7 +7,6 @@ package view;
 import controller.BorrowController;
 import controller.LibrarianController;
 import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -148,23 +147,36 @@ public class ToBorrowBookForm extends javax.swing.JFrame {
     private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
         // TODO add your handling code here:
         String title = titleTF.getText().trim();
+        
         if (title.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter a book title.");
             return;
         }
 
         try {
-            // Kiểm tra số lượng sách còn lại (Available)
-            int available = borrowController.getAvailableByTitle(title);
-            if (available == 0) {
-                JOptionPane.showMessageDialog(this, "This book currently is not available for borrowing (Out of copies)");
+            // Lấy BookID từ tiêu đề sách
+            int bookID = borrowController.getBookIDByTitle(title);
+            if (bookID == -1) {
+                JOptionPane.showMessageDialog(this, "Book not found.");
                 return;
             }
-
-
+            int numBorrow = borrowController.CountReturnedBooks(userID, bookID);
+            int numReturned = borrowController.countReturnedBooksByDate(userID, bookID);
+            // Kiểm tra xem sách đã được mượn bởi người dùng hay chưa
+            if (numBorrow > numReturned) {
+                JOptionPane.showMessageDialog(this, "You have already borrowed this book.");
+                return;
+            }
             
-            Date utilreturnDate = txtDate.getDate();
+            
+//            if (borrowController.isBookAlreadyBorrowed(userID, bookID)) {
+//                JOptionPane.showMessageDialog(this, "You have already borrowed this book.");
+//                return;
+//            }
+
+            java.util.Date utilreturnDate = txtDate.getDate();
             java.sql.Date returnDate = new java.sql.Date(utilreturnDate.getTime());
+
             // Gọi BorrowController để thêm dòng vào bảng BorrowedBooks
             if (borrowController.borrowBook(userID, title, returnDate)) {
                 JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
@@ -178,11 +190,11 @@ public class ToBorrowBookForm extends javax.swing.JFrame {
     }//GEN-LAST:event_borrowBtnActionPerformed
 
     private void setTxtDate () {
-            Date today = new Date();
+            java.util.Date today = new java.util.Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(today);
             calendar.add(Calendar.DAY_OF_MONTH, 14);
-            Date max = calendar.getTime();
+            java.util.Date max = calendar.getTime();
             
             txtDate.setMinSelectableDate(today);
             txtDate.setMaxSelectableDate(max);

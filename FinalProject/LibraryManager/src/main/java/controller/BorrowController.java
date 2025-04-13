@@ -57,7 +57,6 @@ public class BorrowController {
                 });
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
@@ -76,7 +75,6 @@ public class BorrowController {
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -85,10 +83,68 @@ public class BorrowController {
         try {
             return borrowDAO.getAvailableByTitle(title);
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             return -1; // Trả về -1 nếu có lỗi
         }
+    }
+    
+    public int getBookIDByTitle(String title) {
+        try {
+            return borrowDAO.getBookIDByTitle(title);
+        } catch (SQLException e) {
+            return -1; // Trả về -1 nếu không tìm thấy
+        }
+    }
+    
+    public java.sql.Date getReturnDate(int userID, int bookID) {
+        try {
+            return borrowDAO.getReturnDate(userID, bookID);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    public boolean updateReturnDate(int userID, int bookID, java.sql.Date returnDate) {
+        try {
+            return borrowDAO.updateReturnDate(userID, bookID, returnDate);
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean incrementBookAvailability(int bookID) {
+        try {
+            return borrowDAO.incrementBookAvailability(bookID);
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean isBookAlreadyBorrowed(int userID, int bookID) {
+        try {
+            return borrowDAO.isBookAlreadyBorrowed(userID, bookID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public int countReturnedBooksByDate(int userID, int bookID) {
+        try {
+            return borrowDAO.countReturnedBooksByDate(userID, bookID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int CountReturnedBooks(int userID, int bookID) {
+        try {
+            return borrowDAO.countReturnedBook(userID, bookID);
+        } catch (SQLException ex) {
+            Logger.getLogger(BorrowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
     
 }

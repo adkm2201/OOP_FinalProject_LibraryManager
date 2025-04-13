@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import model.BorrowedBook;
 
@@ -142,6 +143,119 @@ public class BorrowDAO {
             }
         } connection.close();
         throw new SQLException("Book not found!");
+    }
+    
+    public int getBookIDByTitle(String title) throws SQLException {
+        connection = db.connect();
+        String query = "SELECT BookID FROM Books WHERE Title = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, title);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("BookID");
+            }
+        } finally {
+            connection.close();
+        }
+        return -1; // Trả về -1 nếu không tìm thấy
+    }
+    
+    public java.sql.Date getReturnDate(int userID, int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "SELECT ReturnDate FROM BorrowedBooks WHERE UserID = ? AND BookID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userID);
+            stmt.setInt(2, bookID);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDate("ReturnDate");
+            }
+        } finally {
+            connection.close();
+        }
+        return null; // Trả về null nếu không tìm thấy
+    }
+    
+    public boolean updateReturnDate(int userID, int bookID, java.sql.Date returnDate) throws SQLException {
+        connection = db.connect();
+        String query = "UPDATE BorrowedBooks SET ReturnDate = ? WHERE UserID = ? AND BookID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDate(1, returnDate);
+            stmt.setInt(2, userID);
+            stmt.setInt(3, bookID);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            connection.close();
+        }
+    }
+    
+    public boolean incrementBookAvailability(int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "UPDATE Books SET Available = Available + 1 WHERE BookID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookID);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            connection.close();
+        }
+    }
+    
+    public boolean isBookAlreadyBorrowed(int userID, int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "SELECT ReturnDate FROM BorrowedBooks WHERE UserID = ? AND BookID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userID);
+            stmt.setInt(2, bookID);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                java.sql.Date sqlReturnDate = rs.getDate("ReturnDate");
+                if (sqlReturnDate != null) {
+                    // Chuyển đổi ReturnDate từ java.sql.Date sang LocalDate
+                    LocalDate returnDate = sqlReturnDate.toLocalDate();
+                    LocalDate today = LocalDate.now();
+
+                    // So sánh returnDate với today
+                    return returnDate.isAfter(today); // Trả về true nếu returnDate > today
+                }
+            }
+        } finally {
+            connection.close();
+        }
+        return false; // Trả về false nếu không tồn tại hoặc returnDate <= today
+    }
+    
+    public int countReturnedBooksByDate(int userID, int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "SELECT COUNT(*) AS Count FROM BorrowedBooks WHERE UserID = ? AND BookID = ? AND ReturnDate <= ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userID);
+            stmt.setInt(2, bookID);
+            stmt.setDate(3, java.sql.Date.valueOf(LocalDate.now())); // Lấy ngày hiện tại
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Count"); // Trả về số dòng đếm được
+            }
+        } finally {
+            connection.close();
+        }
+        return 0; // Trả về 0 nếu không có dòng nào
+    }
+    
+    public int countReturnedBook(int userID, int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "SELECT COUNT(*) AS Count FROM BorrowedBooks WHERE UserID = ? AND BookID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userID);
+            stmt.setInt(2, bookID);
+            stmt.setDate(3, java.sql.Date.valueOf(LocalDate.now())); // Lấy ngày hiện tại
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Count"); // Trả về số dòng đếm được
+            }
+        } finally {
+            connection.close();
+        }
+        return 0; // Trả về 0 nếu không có dòng nào    
     }
     
 }
