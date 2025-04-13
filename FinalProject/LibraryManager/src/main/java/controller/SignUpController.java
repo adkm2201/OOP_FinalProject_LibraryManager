@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 /**
@@ -10,9 +6,12 @@ package controller;
  */
 import dao.UserDAO;
 import database.Database;
+
 import model.User;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 public class SignUpController {
@@ -31,7 +30,7 @@ public class SignUpController {
 
         try {
             User user = new User(username, password, 0); // Default UserType = 0 (reader)
-            userDAO.addUser(user);
+            userDAO.add(user);
             JOptionPane.showMessageDialog(null, "Sign up successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "An error occurred while signing up.", "Error", JOptionPane.ERROR_MESSAGE);

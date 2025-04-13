@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 /**
@@ -9,9 +5,12 @@ package controller;
  * @author adkm2
  */
 import dao.UserDAO;
-import model.User;
 import java.sql.SQLException;
+
+import model.User;
+
 import javax.swing.JOptionPane;
+
 import view.AdminForm;
 import view.LibrarianForm;
 import view.LoginForm;
@@ -24,10 +23,6 @@ public class LoginController {
     public LoginController() {
     }
     
-//    public LoginController(Connection connection) {
-//        this.userDAO = new UserDAO(connection);
-//    }
-
     public boolean login(String username, String password) {
         try {
             User user = userDAO.getUserByUsername(username);
@@ -36,9 +31,7 @@ public class LoginController {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "An error occurred while connecting to the database.", "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
-        //JOptionPane.showMessageDialog(null, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
         return false;
     }
     
@@ -61,19 +54,15 @@ public class LoginController {
     
     public boolean register(String username, String password, int userType) throws SQLException {
         User user = new User(username, password, 0);
-        if (userDAO.addUser(user) != null) return true;
-        return false;
+        return userDAO.add(user) != null;
     }
     
+    //Handling when login is success
     public void loginSuccess(String username) {
         try {
-            // Lấy userType từ cơ sở dữ liệu dựa trên username
             int userType = userDAO.getUserTypeByUsername(username);
-
-            // Đóng LoginForm
             loginForm.dispose();
-
-            // Mở form tương ứng dựa trên userType
+            
             switch (userType) {
                 case 0: // Reader
                     new ReaderForm(this.getLoginForm()).setVisible(true);
@@ -88,18 +77,16 @@ public class LoginController {
                     JOptionPane.showMessageDialog(null, "Invalid user type!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
     
     public int getUserIDByUsername(String username) {
         try {
-            return userDAO.getUserIDByUsername(username); // Gọi phương thức từ UserDAO
+            return userDAO.getUserIDByUsername(username);
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            return -1; // Trả về -1 nếu có lỗi
+            return -1;
         }
     }
     

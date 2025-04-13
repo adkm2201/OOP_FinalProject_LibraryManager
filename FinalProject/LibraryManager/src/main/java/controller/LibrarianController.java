@@ -1,13 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dao.BookDAO;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +31,7 @@ public class LibrarianController {
     public void addBook(String title, String author, String genre, String isbn, int available, boolean bookType, int numberOfPages, String fileFormat) {
         try {
             Book book = new Book(title, author, genre, isbn, available, bookType, numberOfPages, fileFormat);
-            Book addedBook = bookDAO.addBook(book); // Thêm sách và lấy đối tượng Book với BookID
+            Book addedBook = bookDAO.add(book); // Thêm sách và lấy đối tượng Book với BookID
 
             if (addedBook.getBookID() > 0) {
                 JOptionPane.showMessageDialog(null, "Book added successfully! Book ID: " + addedBook.getBookID());
@@ -41,14 +39,13 @@ public class LibrarianController {
                 JOptionPane.showMessageDialog(null, "Failed to add book.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
     
     public void loadBooksToTable(JTable table) {
         try {
-            List<Book> books = bookDAO.getAllBooks();
+            List<Book> books = bookDAO.getAll();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0); // Clear existing rows
             for (Book book : books) {
@@ -64,7 +61,6 @@ public class LibrarianController {
                 });
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
@@ -87,20 +83,18 @@ public class LibrarianController {
                 });
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
     
     public void deleteBook(int bookID) {
         try {
-            if (bookDAO.deleteBook(bookID)) {
+            if (bookDAO.delete(bookID)) {
                 JOptionPane.showMessageDialog(null, "Book deleted successfully!");
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to delete book. Book ID not found.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
@@ -118,13 +112,12 @@ public class LibrarianController {
             book.setNumberOfPages(numberOfPages);
             book.setFileFormat(fileFormat);
 
-            if (bookDAO.updateBook(book)) {
+            if (bookDAO.update(book)) {
                 JOptionPane.showMessageDialog(null, "Book updated successfully!");
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update book. Book ID not found.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
@@ -133,7 +126,6 @@ public class LibrarianController {
         try {
             return bookDAO.getBookByID(bookID); // Gọi phương thức từ BookDAO
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             return null;
         }
@@ -143,7 +135,6 @@ public class LibrarianController {
         try {
             return bookDAO.getBooksByFilter(title, author, genres);
         } catch (SQLException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             return new ArrayList<>();
         }

@@ -1,18 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dao.BorrowDAO;
 import java.sql.SQLException;
-import java.sql.Date;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import model.BorrowedBook;
 
 /**
@@ -25,7 +23,7 @@ public class BorrowController {
     
     public void loadBorrowedBooksToTable(JTable table) {
         try {
-            List<BorrowedBook> borrowedBooks = borrowDAO.getAllBorrowedBooks();
+            List<BorrowedBook> borrowedBooks = borrowDAO.getAll();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0); // Xóa dữ liệu cũ
             for (BorrowedBook book : borrowedBooks) {
@@ -64,7 +62,7 @@ public class BorrowController {
     public boolean borrowBook(int userID, String title, java.sql.Date returnDate) {
         try {
             // Thêm dòng vào bảng BorrowedBooks
-            boolean isBorrowed = borrowDAO.addBorrowedBook(userID, title, returnDate);
+            boolean isBorrowed = borrowDAO.addBorrowedBookByTitle(userID, title, returnDate);
             if (isBorrowed) {
                 // Lấy BookID từ tiêu đề sách
                 int bookID = borrowDAO.getBookIDByTitle(title);
@@ -82,7 +80,6 @@ public class BorrowController {
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -132,7 +129,6 @@ public class BorrowController {
         try {
             return borrowDAO.isBookAlreadyBorrowed(userID, bookID);
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -141,7 +137,6 @@ public class BorrowController {
         try {
             return borrowDAO.countReturnedBooksByDate(userID, bookID);
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return 0;
     }
@@ -159,7 +154,6 @@ public class BorrowController {
         try {
             return borrowDAO.getAvailableByBookID(bookID);
         } catch (SQLException e) {
-            e.printStackTrace();
             return 0; // Trả về 0 nếu có lỗi
         }
     }
@@ -168,7 +162,6 @@ public class BorrowController {
         try {
             return borrowDAO.decrementBookAvailability(bookID);
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }

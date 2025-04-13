@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 import model.BorrowedBook;
@@ -19,13 +20,60 @@ import model.BorrowedBook;
  *
  * @author adkm2
  */
-public class BorrowDAO {
+public class BorrowDAO extends BaseDAO<BorrowedBook>{
     private Connection connection;
     private Database db = new Database();
     
-    
-    
-    public List<BorrowedBook> getAllBorrowedBooks() throws SQLException {
+    public BorrowDAO() {
+        super();
+    }
+
+    public BorrowDAO(Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    public BorrowedBook add(BorrowedBook borrowedBook) throws SQLException {
+        connection = db.connect();
+        String query = "INSERT INTO BorrowedBooks (UserID, BookID, BorrowDate, ReturnDate) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, borrowedBook.getUserID());
+            stmt.setInt(2, borrowedBook.getBookID());
+            stmt.setDate(3, (Date) borrowedBook.getBorrowDate());
+            stmt.setDate(4, (Date) borrowedBook.getReturnDate());
+            return borrowedBook;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    @Override
+    public boolean update(BorrowedBook borrowedBook) throws SQLException {
+        connection = db.connect();
+        String query = "UPDATE BorrowedBooks SET ReturnDate = ? WHERE BorrowID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDate(1, (Date) borrowedBook.getReturnDate());
+            stmt.setInt(2, borrowedBook.getBorrowID());
+            return stmt.executeUpdate() > 0;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    @Override
+    public boolean delete(int id) throws SQLException {
+        connection = db.connect();
+        String query = "DELETE FROM BorrowedBooks WHERE BorrowID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    @Override
+    public List<BorrowedBook> getAll() throws SQLException {
         connection = db.connect();
         String query = "SELECT bb.BorrowID, u.Username, b.Title AS BookTitle, bb.BorrowDate, bb.ReturnDate " +
                        "FROM BorrowedBooks bb " +
@@ -47,7 +95,31 @@ public class BorrowDAO {
             connection.close();
         }
         return borrowedBooks;
-        }
+    }
+    
+//    public List<BorrowedBook> getAllBorrowedBooks() throws SQLException {
+//        connection = db.connect();
+//        String query = "SELECT bb.BorrowID, u.Username, b.Title AS BookTitle, bb.BorrowDate, bb.ReturnDate " +
+//                       "FROM BorrowedBooks bb " +
+//                       "JOIN Users u ON bb.UserID = u.UserID " +
+//                       "JOIN Books b ON bb.BookID = b.BookID";
+//        List<BorrowedBook> borrowedBooks = new ArrayList<>();
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                BorrowedBook borrowedBook = new BorrowedBook();
+//                borrowedBook.setBorrowID(rs.getInt("BorrowID"));
+//                borrowedBook.setUsername(rs.getString("Username"));
+//                borrowedBook.setBookTitle(rs.getString("BookTitle"));
+//                borrowedBook.setBorrowDate(rs.getDate("BorrowDate"));
+//                borrowedBook.setReturnDate(rs.getDate("ReturnDate"));
+//                borrowedBooks.add(borrowedBook);
+//            }
+//        } finally {
+//            connection.close();
+//        }
+//        return borrowedBooks;
+//        }
     
     public List<BorrowedBook> getBorrowedBooksByUserID(int userID) throws SQLException {
         connection = db.connect();
@@ -75,7 +147,7 @@ public class BorrowDAO {
         return borrowedBooks;
     }
     
-    public boolean addBorrowedBook(int userID, String title, java.sql.Date returnDate) throws Exception {
+    public boolean addBorrowedBookByTitle(int userID, String title, java.sql.Date returnDate) throws Exception {
         // Lấy BookID từ tiêu đề sách
         connection = db.connect();
         String getBookIDQuery = "SELECT BookID FROM Books WHERE Title = ?";
@@ -119,17 +191,6 @@ public class BorrowDAO {
         }
         return 0; // Trả về 0 nếu không có dòng nào
     }
-    
-//    public boolean updateAvailableByTitle(String title, int borrowedCount) throws SQLException {
-//        connection = db.connect();
-//        String query = "UPDATE Books SET Available = GREATEST(Available - 1, 0) WHERE Title = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setString(1, title);
-//            return stmt.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
-//        } finally {
-//            connection.close();
-//        }
-//    }
     
     public int getAvailableByTitle(String title) throws SQLException {
         connection = db.connect();
