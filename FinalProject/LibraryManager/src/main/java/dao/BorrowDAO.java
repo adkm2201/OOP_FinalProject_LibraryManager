@@ -107,12 +107,12 @@ public class BorrowDAO {
         connection = db.connect();
         String query = "SELECT COUNT(*) AS BorrowCount FROM BorrowedBooks bb " +
                        "JOIN Books b ON bb.BookID = b.BookID " +
-                       "WHERE b.Title = ?";
+                       "WHERE b.Title = ? AND bb.ReturnDate > CURRENT_DATE";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, title);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt("BorrowCount");
+                return rs.getInt("BorrowCount"); // Trả về số dòng đếm được
             }
         } finally {
             connection.close();
@@ -120,17 +120,16 @@ public class BorrowDAO {
         return 0; // Trả về 0 nếu không có dòng nào
     }
     
-    public boolean updateAvailableByTitle(String title, int borrowedCount) throws SQLException {
-        connection = db.connect();
-        String query = "UPDATE Books SET Available = GREATEST(Available - ?, 0) WHERE Title = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, borrowedCount); // Số lượng sách đã mượn
-            stmt.setString(2, title);
-            return stmt.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
-        } finally {
-            connection.close();
-        }
-    }
+//    public boolean updateAvailableByTitle(String title, int borrowedCount) throws SQLException {
+//        connection = db.connect();
+//        String query = "UPDATE Books SET Available = GREATEST(Available - 1, 0) WHERE Title = ?";
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setString(1, title);
+//            return stmt.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
+//        } finally {
+//            connection.close();
+//        }
+//    }
     
     public int getAvailableByTitle(String title) throws SQLException {
         connection = db.connect();
@@ -247,7 +246,6 @@ public class BorrowDAO {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, userID);
             stmt.setInt(2, bookID);
-            stmt.setDate(3, java.sql.Date.valueOf(LocalDate.now())); // Lấy ngày hiện tại
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Count"); // Trả về số dòng đếm được
@@ -257,5 +255,31 @@ public class BorrowDAO {
         }
         return 0; // Trả về 0 nếu không có dòng nào    
     }
+    
+    public boolean decrementBookAvailability(int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "UPDATE Books SET Available = Available - 1 WHERE BookID = ? AND Available > 0";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookID);
+            return stmt.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
+        } finally {
+            connection.close();
+        }
+    }
+
+    public int getAvailableByBookID(int bookID) throws SQLException {
+        connection = db.connect();
+        String query = "SELECT Available FROM Books WHERE BookID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookID);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Available");
+            }
+        } finally {
+            connection.close();
+        }
+        return 0; // Trả về 0 nếu không tìm thấy
+        } 
     
 }

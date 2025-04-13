@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author adkm2
  */
-public class BorrowForm extends javax.swing.JFrame {
+public class ReturnForm extends javax.swing.JFrame {
     private BorrowController borrowController = new BorrowController();
     
     private int userID; // Biến để lưu userID
 
-    public BorrowForm(int userID) {
+    public ReturnForm(int userID) {
         this.userID = userID; // Lưu userID
         initComponents();
         this.setLocationRelativeTo(null);
@@ -153,9 +153,10 @@ public class BorrowForm extends javax.swing.JFrame {
             if (sqlReturnDate != null) {
                 // Chuyển đổi returnDate từ java.sql.Date sang LocalDate
                 LocalDate returnDate = sqlReturnDate.toLocalDate();
-
+                int numBorrow = borrowController.CountReturnedBooks(userID, bookID);
+                int numReturned = borrowController.countReturnedBooksByDate(userID, bookID);
                 // So sánh ngày
-                if (returnDate.equals(currentDate)) {
+                if (numBorrow == numReturned) {
                     JOptionPane.showMessageDialog(this, "This book has already been returned.");
                     return;
                 }

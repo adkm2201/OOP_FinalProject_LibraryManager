@@ -66,15 +66,23 @@ public class BorrowController {
             // Thêm dòng vào bảng BorrowedBooks
             boolean isBorrowed = borrowDAO.addBorrowedBook(userID, title, returnDate);
             if (isBorrowed) {
-                // Đếm số dòng của title trong bảng BorrowedBooks
-                int borrowedCount = borrowDAO.countBorrowedByTitle(title);
-                // Cập nhật cột Available trong bảng Books
-                borrowDAO.updateAvailableByTitle(title, borrowedCount);
+                // Lấy BookID từ tiêu đề sách
+                int bookID = borrowDAO.getBookIDByTitle(title);
+                if (bookID == -1) {
+                    throw new Exception("Book not found.");
+                }
+
+                // Giảm 1 vào cột Available trong bảng Books
+                boolean isUpdated = borrowDAO.decrementBookAvailability(bookID);
+                if (!isUpdated) {
+                    throw new Exception("Failed to update book availability.");
+                }
 
                 return true;
             }
             return false;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -145,6 +153,24 @@ public class BorrowController {
             Logger.getLogger(BorrowController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public int getAvailableByBookID(int bookID) {
+        try {
+            return borrowDAO.getAvailableByBookID(bookID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0; // Trả về 0 nếu có lỗi
+        }
+    }
+    
+    public boolean decrementBookAvailability(int bookID) {
+        try {
+            return borrowDAO.decrementBookAvailability(bookID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
 }

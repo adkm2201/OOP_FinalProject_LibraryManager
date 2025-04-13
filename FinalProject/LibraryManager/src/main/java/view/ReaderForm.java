@@ -246,7 +246,7 @@ public class ReaderForm extends javax.swing.JFrame {
 
     private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
         // TODO add your handling code here:
-        BorrowForm bf = new BorrowForm(loginForm.userID);
+        ReturnForm bf = new ReturnForm(loginForm.userID);
         bf.setVisible(true);
     }//GEN-LAST:event_returnBtnActionPerformed
 

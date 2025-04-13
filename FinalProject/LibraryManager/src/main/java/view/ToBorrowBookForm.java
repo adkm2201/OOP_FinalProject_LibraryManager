@@ -147,7 +147,7 @@ public class ToBorrowBookForm extends javax.swing.JFrame {
     private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
         // TODO add your handling code here:
         String title = titleTF.getText().trim();
-        
+
         if (title.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter a book title.");
             return;
@@ -160,22 +160,29 @@ public class ToBorrowBookForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Book not found.");
                 return;
             }
+
+            // Kiểm tra số lượng sách còn lại (Available)
+            int available = borrowController.getAvailableByBookID(bookID);
+            if (available <= 0) {
+                JOptionPane.showMessageDialog(this, "This book currently is not available for borrwing.");
+                return;
+            }
+
+            // Kiểm tra xem sách đã được mượn bởi người dùng hay chưa
             int numBorrow = borrowController.CountReturnedBooks(userID, bookID);
             int numReturned = borrowController.countReturnedBooksByDate(userID, bookID);
-            // Kiểm tra xem sách đã được mượn bởi người dùng hay chưa
             if (numBorrow > numReturned) {
                 JOptionPane.showMessageDialog(this, "You have already borrowed this book.");
                 return;
             }
-            
-            
-//            if (borrowController.isBookAlreadyBorrowed(userID, bookID)) {
-//                JOptionPane.showMessageDialog(this, "You have already borrowed this book.");
-//                return;
-//            }
 
-            java.util.Date utilreturnDate = txtDate.getDate();
-            java.sql.Date returnDate = new java.sql.Date(utilreturnDate.getTime());
+            // Lấy ngày trả từ txtDate
+            java.util.Date utilReturnDate = txtDate.getDate();
+            if (utilReturnDate == null) {
+                JOptionPane.showMessageDialog(this, "Please select a valid return date.");
+                return;
+            }
+            java.sql.Date returnDate = new java.sql.Date(utilReturnDate.getTime());
 
             // Gọi BorrowController để thêm dòng vào bảng BorrowedBooks
             if (borrowController.borrowBook(userID, title, returnDate)) {
@@ -187,19 +194,25 @@ public class ToBorrowBookForm extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
+    
     }//GEN-LAST:event_borrowBtnActionPerformed
 
-    private void setTxtDate () {
-            java.util.Date today = new java.util.Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(today);
-            calendar.add(Calendar.DAY_OF_MONTH, 14);
-            java.util.Date max = calendar.getTime();
-            
-            txtDate.setMinSelectableDate(today);
-            txtDate.setMaxSelectableDate(max);
+    //limit date selection
+    private void setTxtDate() {
+        java.util.Date today = new java.util.Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        java.util.Date min = calendar.getTime();
+
+        calendar.add(Calendar.DAY_OF_MONTH, 13); 
+        java.util.Date max = calendar.getTime();
+
+        txtDate.setMinSelectableDate(min);
+        txtDate.setMaxSelectableDate(max);
     }
-    
+
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
