@@ -1,7 +1,7 @@
 CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY,
     Username NVARCHAR(50) NOT NULL UNIQUE,
-    [password] NVARCHAR(255) NOT NULL,
+    [password] NVARCHAR(50) NOT NULL,
     UserType INT NOT NULL CHECK (UserType IN (0, 1, 2)) -- 0: reader, 1: librarian, 2: admin
 );
 
@@ -24,14 +24,10 @@ CREATE TABLE BorrowedBooks (
     UserID INT NOT NULL,
     BookID INT NOT NULL,
     BorrowDate DATE NOT NULL,         
-    ReturnDate DATE,
+    ReturnDate DATE CHECK (ReturnDate >= BorrowDate),
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (BookID) REFERENCES Books(BookID)
 );
-
-drop table BorrowedBooks;
-drop table Books;
-drop table Users;
 
 
 INSERT INTO Books (Title, Author, Genre, ISBN, Available, BookType, NumberOfPages, FileFormat)
@@ -56,15 +52,6 @@ VALUES
 ('Frankenstein', 'Mary Shelley', 'Horror', '9780486282114', 6, 0, 280, NULL),
 ('Dracula', 'Bram Stoker', 'Horror', '9780486411095', 4, 0, 418, NULL),
 ('The Shining', 'Stephen King', 'Horror', '9780307743657', 3, 1, NULL, 'PDF');
-INSERT INTO Books (Title, Author, Genre, ISBN, Available, BookType, NumberOfPages, FileFormat)
-VALUES
--- Printed book
-('Clean Code', 'Robert C. Martin', 'Tech', '9780132350884', 5, 0, 464, NULL),
--- Ebook
-('The Pragmatic Programmer', 'Andrew Hunt and David Thomas', 'Tech', '9780201616224', 7, 1, NULL, 'PDF'),
--- Mixed
-('Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', 'Tech', '9780201633610', 6, 0, 395, NULL);
-
 
 INSERT INTO Books (Title, Author, Genre, ISBN, Available, BookType, NumberOfPages, FileFormat)
 VALUES
@@ -77,3 +64,12 @@ VALUES
 
 -- Verify the inserted data
 SELECT * FROM Books;
+
+insert into Users (Username, password, UserType)
+values 
+--admin
+('admin', 'admin', 2),
+--librarian
+('lib', 'lib', 1),
+-- reader
+('readera','reader',0);
