@@ -274,6 +274,7 @@ public class AdminForm extends javax.swing.JFrame {
 
         deleteBtn.setEnabled(false);
         saveBtn.setEnabled(false);
+        addBtn.setEnabled(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void signOutLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signOutLabelMouseClicked
@@ -289,6 +290,7 @@ public class AdminForm extends javax.swing.JFrame {
         int userType = Integer.parseInt(userTypeTF.getText());
         adminController.addUser(username, password, userType);
         adminController.loadUsersToTable(userTable);
+        cancelBtn.doClick();
     }// GEN-LAST:event_addBtnActionPerformed
     
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_deleteBtnActionPerformed
@@ -298,10 +300,12 @@ public class AdminForm extends javax.swing.JFrame {
         int userId = Integer.parseInt(userIDTF.getText());
         adminController.deleteUser(userId);
         adminController.loadUsersToTable(userTable);
+        cancelBtn.doClick();
     }// GEN-LAST:event_deleteBtnActionPerformed
 
     private void getBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_getBtnActionPerformed
         // TODO add your handling code here:
+        addBtn.setEnabled(false);
         try {
         int userId = Integer.parseInt(userIDTF.getText()); // Lấy UserID từ TextField
         User user = adminController.getUserById(userId); // Gọi controller để lấy thông tin người dùng

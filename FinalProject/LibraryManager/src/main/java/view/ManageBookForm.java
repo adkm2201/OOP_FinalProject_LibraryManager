@@ -329,10 +329,12 @@ public class ManageBookForm extends javax.swing.JFrame {
         
         deleteBtn.setEnabled(false);
         saveBtn.setEnabled(false);
+        addBtn.setEnabled(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void getBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getBtnActionPerformed
         // TODO add your handling code here:
+        addBtn.setEnabled(false);
         try {
             // Lấy BookID từ TextField
         int bookID = Integer.parseInt(idTF.getText());       
@@ -370,9 +372,11 @@ public class ManageBookForm extends javax.swing.JFrame {
         String isbn = isbnTF.getText();
         int available = Integer.parseInt(availableTF.getText());
         boolean bookType = Boolean.parseBoolean(typeTF.getText()); // 0: Printed, 1: Ebook
-        int numberOfPages = Integer.parseInt(pagesTF.getText());
         String fileFormat = fileTF.getText();
-
+        
+        if (pagesTF.getText().equalsIgnoreCase("")) 
+            pagesTF.setText("0");
+        int numberOfPages = Integer.parseInt(pagesTF.getText());
         librarianController.addBook(title, author, genre, isbn, available, bookType, numberOfPages, fileFormat);
         this.librarianForm.reloadBookTable();
         cancelBtn.doClick();
@@ -390,7 +394,7 @@ public class ManageBookForm extends javax.swing.JFrame {
         cancelBtn.doClick();
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Invalid Book ID! Please enter a valid number");
-    }
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed

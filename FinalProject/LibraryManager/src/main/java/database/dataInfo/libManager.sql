@@ -15,7 +15,7 @@ CREATE TABLE Books (
     Available INT NOT NULL, -- = 0: not available, > 0: available
     BookType BIT NOT NULL, -- 0: printed book, 1: ebook
     NumberOfPages INT, -- only when booktype = 0
-    FileFormat NVARCHAR(20) --only when booktype = 1
+    FileFormat NVARCHAR(20) -- only when booktype = 1
 );
 
 

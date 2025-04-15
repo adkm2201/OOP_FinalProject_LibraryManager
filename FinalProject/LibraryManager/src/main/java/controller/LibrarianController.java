@@ -42,7 +42,7 @@ public class LibrarianController {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
-    
+     
     public void loadBooksToTable(JTable table) {
         try {
             List<Book> books = bookDAO.getAll();
